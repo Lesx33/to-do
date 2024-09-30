@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Lesx33/to-do.git/static/css/main.8cecc334.css",
+    "main.js": "/Lesx33/to-do.git/static/js/main.1f79aa73.js",
+    "static/js/453.a6f6b83d.chunk.js": "/Lesx33/to-do.git/static/js/453.a6f6b83d.chunk.js",
+    "index.html": "/Lesx33/to-do.git/index.html",
+    "main.8cecc334.css.map": "/Lesx33/to-do.git/static/css/main.8cecc334.css.map",
+    "main.1f79aa73.js.map": "/Lesx33/to-do.git/static/js/main.1f79aa73.js.map",
+    "453.a6f6b83d.chunk.js.map": "/Lesx33/to-do.git/static/js/453.a6f6b83d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8cecc334.css",
+    "static/js/main.1f79aa73.js"
+  ]
+}
