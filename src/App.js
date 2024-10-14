@@ -1,54 +1,42 @@
-import React, { useState, useEffect} from 'react';
+import React, { useEffect} from 'react';
 import TodoList from './TodoList';
 
 function App() {
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showInstallButton, setShowInstallButton] = useState(false);
-
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
-      // Prevenir el prompt automático
+      // Previene que el navegador muestre el prompt por defecto
       e.preventDefault();
-      // Guardar el evento para lanzarlo manualmente más tarde
-      setDeferredPrompt(e);
-      // Mostrar un botón o cualquier UI para instalar
-      setShowInstallButton(true);
+      
+      // Muestra una alerta preguntando si el usuario quiere instalar la app
+      const userWantsToInstall = window.confirm("¿Deseas instalar esta aplicación?");
+
+      if (userWantsToInstall) {
+        // Si el usuario quiere instalar, mostramos el prompt de instalación
+        e.prompt();
+
+        // Manejar la elección del usuario
+        e.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('El usuario aceptó la instalación');
+          } else {
+            console.log('El usuario rechazó la instalación');
+          }
+        });
+      }
     };
 
-     // Escuchar el evento 'beforeinstallprompt'
-     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    // Escuchar el evento 'beforeinstallprompt'
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-     return () => {
-       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-     };
-   }, []);
- 
-   const handleInstallClick = () => {
-     if (deferredPrompt) {
-       // Lanzar el prompt de instalación
-       deferredPrompt.prompt();
- 
-       // Ver qué decide el usuario
-       deferredPrompt.userChoice.then((choiceResult) => {
-         if (choiceResult.outcome === 'accepted') {
-           console.log('El usuario aceptó la instalación');
-         } else {
-           console.log('El usuario rechazó la instalación');
-         }
-         setDeferredPrompt(null);  // Resetear el deferredPrompt
-         setShowInstallButton(false);  // Ocultar el botón
-       });
-     }
-   };
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
   return (
     <div>
       <TodoList/>
-      {/* Mostrar botón solo si el evento `beforeinstallprompt` fue capturado */}
-      {showInstallButton && (
-        <button onClick={handleInstallClick}>
-          Instalar Aplicación
-        </button>
-      )}
+      
     </div>
   );
 }
